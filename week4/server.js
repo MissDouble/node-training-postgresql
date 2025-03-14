@@ -257,7 +257,7 @@ const requestListener = async (req, res) => {
     res.writeHead(404, headers)
     res.write(JSON.stringify({
       status: "failed",
-      message: "無此網站路由",
+      message: "無此網站路由"
     }))
     res.end()
   }
@@ -265,7 +265,7 @@ const requestListener = async (req, res) => {
 
 const server = http.createServer(requestListener)
 
-async function startServer() {
+async function startServer () {
   await AppDataSource.initialize()
   console.log("資料庫連接成功")
   server.listen(process.env.PORT)

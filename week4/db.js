@@ -13,6 +13,11 @@ const CreditPackage = new EntitySchema({
     name: {
       type: "varchar",
       length: 50,
+      nullable: false
+    },
+    name: {
+      type: "varchar",
+      length: 50,
       nullable: false,
       unique: true
     },
@@ -66,12 +71,9 @@ const AppDataSource = new DataSource({
   username: process.env.DB_USERNAME || "root",
   password: process.env.DB_PASSWORD || "test",
   database: process.env.DB_DATABASE || "test",
-  entities: [CreditPackage, Skill],
+  entities: [CreditPackage],
   synchronize: true,
 })
-// 透過 entities 陣列將所有 EntitySchema 加入。
-
-// 啟動時 TypeORM 會根據這些設定自動建立或更新表結構（若 synchronize: true）。
 
 // 之後就能使用 AppDataSource.getRepository("CreditPackage") 或 AppDataSource.getRepository("Skill") 進行 CRUD。
 module.exports = AppDataSource
