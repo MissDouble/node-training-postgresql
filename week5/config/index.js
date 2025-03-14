@@ -1,10 +1,12 @@
 const dotenv = require('dotenv')
-
+console.log(dotenv);
 const result = dotenv.config()
+console.log(result)
 const db = require('./db')
 const web = require('./web')
 
 if (result.error) {
+  console.error('Failed to load .env:', result.error)
   throw result.error
 }
 const config = {

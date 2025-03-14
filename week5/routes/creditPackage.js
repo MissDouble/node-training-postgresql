@@ -1,6 +1,7 @@
 const express = require('express')
 
 const router = express.Router()
+console.log(router)
 const { dataSource } = require('../db/data-source')
 const logger = require('../utils/logger')('CreditPackage')
 
