@@ -4,6 +4,7 @@ const config = require('../config/index')
 const CreditPackage = require('../entities/CreditPackages')//引入資料表
 const Skill = require('../entities/Skill')
 const User = require('../entities/User')
+const Coach = require('../entities/Coach')
 
 const dataSource = new DataSource({
   type: 'postgres',
@@ -17,7 +18,8 @@ const dataSource = new DataSource({
   entities: [
     CreditPackage,
     Skill,
-    User
+    User,
+    Coach
   ],//記得在這引入資料表
   ssl: config.get('db.ssl')
 })
