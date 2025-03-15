@@ -1,7 +1,9 @@
 const { DataSource } = require('typeorm')
 const config = require('../config/index')
 
-const CreditPackage = require('../entities/CreditPackages')
+const CreditPackage = require('../entities/CreditPackages')//引入資料表
+const Skill = require('../entities/Skill')
+const User = require('../entities/User')
 
 const dataSource = new DataSource({
   type: 'postgres',
@@ -13,8 +15,10 @@ const dataSource = new DataSource({
   synchronize: config.get('db.synchronize'),
   poolSize: 10,
   entities: [
-    CreditPackage
-  ],
+    CreditPackage,
+    Skill,
+    User
+  ],//記得在這引入資料表
   ssl: config.get('db.ssl')
 })
 
