@@ -13,11 +13,6 @@ const CreditPackage = new EntitySchema({
     name: {
       type: "varchar",
       length: 50,
-      nullable: false
-    },
-    name: {
-      type: "varchar",
-      length: 50,
       nullable: false,
       unique: true
     },
