@@ -3,6 +3,7 @@ const router = express.Router()
 const dataSource = require('../db/data-source')
 const logger = require('../utils/logger')('Skill')
 const { isUndefined, isNotValidString } = require('../utils/validUtils')
+const appError = require('../utils/appError')
 
 router.get('/', async(req, res , next)=> {
 try {
@@ -22,10 +23,12 @@ router.post('/', async(req, res , next)=> {
 try {
     const data = req.body
     if(isUndefined(data.name)|| isNotValidString(data.name)){
-        res.status(400).json({
-            status: "fail",
-            message: "欄位填寫錯誤"
-        })
+        // res.status(400).json({
+        //     status: "fail",
+        //     message: "欄位填寫錯誤"
+        // })
+        next(appError(400,"欄位未填寫正確"))
+        return
     }
     const skillRepo = await dataSource.getRepository('Skill')
     const existSkill = await skillRepo.find({
@@ -48,6 +51,7 @@ try {
         data: result
     })
 } catch (error) {
+    logger(error)
     next(error)
 }
 })
@@ -71,6 +75,7 @@ try {
             status: "success",
         })
 }}} catch (error) {
+    logger(error)
     next(error);
 }
 })

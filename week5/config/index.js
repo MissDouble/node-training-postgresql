@@ -4,6 +4,7 @@ const result = dotenv.config()
 console.log(result)
 const db = require('./db')
 const web = require('./web')
+const secret = require('./secret')
 
 if (result.error) {
   console.error('Failed to load .env:', result.error)
@@ -11,7 +12,8 @@ if (result.error) {
 }
 const config = {
   db,
-  web
+  web,
+  secret
 }
 
 class ConfigManager {

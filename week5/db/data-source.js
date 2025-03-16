@@ -5,6 +5,7 @@ const CreditPackage = require('../entities/CreditPackages')//引入資料表
 const Skill = require('../entities/Skill')
 const User = require('../entities/User')
 const Coach = require('../entities/Coach')
+const Course = require('../entities/Course')
 
 const dataSource = new DataSource({
   type: 'postgres',
