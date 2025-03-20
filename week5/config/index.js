@@ -1,7 +1,7 @@
 const dotenv = require('dotenv')
-console.log(dotenv);
+// console.log(dotenv);
 const result = dotenv.config()
-console.log(result)
+// console.log(result)
 const db = require('./db')
 const web = require('./web')
 const secret = require('./secret')

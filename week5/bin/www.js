@@ -5,9 +5,14 @@
  */
 const http = require('http')
 const config = require('../config/index')
-const app = require('../app') // 導入 app.js
+
+// const app = require('../app') // 導入 app.js
+const { app, client } = require('../app');
+// console.log("Database client in www.js:", client);
+
 const logger = require('../utils/logger')('www')
 const { dataSource } = require('../db/data-source')
+// console.log("Database Source:", dataSource);
 
 const port = config.get('web.port')
 
@@ -41,6 +46,11 @@ function onError (error) {
 server.on('error', onError)
 server.listen(port, async () => {
   try {
+    console.log("🚀 嘗試初始化 DataSource...");
+    
+    if (!dataSource || typeof dataSource.initialize !== 'function') {
+      throw new Error("❌ dataSource is not properly initialized!");
+    }
     await dataSource.initialize()
     logger.info('資料庫連線成功')
     logger.info(`伺服器運作中. port: ${port}`)

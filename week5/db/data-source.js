@@ -25,4 +25,25 @@ const dataSource = new DataSource({
   ssl: config.get('db.ssl')
 })
 
+// console.log("📌 檢查 Entities:", {
+//   CreditPackage,
+//   Skill,
+//   User,
+//   Coach,
+//   Course
+// });// 檢查是否有 `undefined` 的 entity
+
+async function initializeDataSource() {
+  try {
+    console.log("🚀 嘗試初始化 DataSource...")
+    await dataSource.initialize()
+    console.log("✅ DataSource 初始化成功")
+  } catch (error) {
+    console.error("❌ DataSource 初始化失敗:", error)
+    process.exit(1)
+  }
+}
+
+initializeDataSource()
+
 module.exports = { dataSource }

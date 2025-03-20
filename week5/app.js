@@ -9,6 +9,26 @@ const skillRouter = require('./routes/skill')
 const userRouter = require('./routes/users')
 const adminRouter = require('./routes/admin')
 
+//----debug
+require('dotenv').config(); // 確保 .env 變數載入
+const { Client } = require('pg');
+
+// 測試資料庫連線
+const client = new Client({
+  host: process.env.DB_HOST,
+  port: process.env.DB_PORT,
+  user: process.env.DB_USERNAME,
+  password: process.env.DB_PASSWORD,
+  database: process.env.DB_DATABASE,
+});
+
+client.connect()
+  .then(() => console.log('✅ Database connected'))
+  .catch(err => {
+    console.error('❌ Database connection failed:', err);
+    process.exit(1); // 連線失敗直接退出程式，避免無法使用的 API
+  });
+//----debug
 const app = express()
 app.use(cors())
 app.use(express.json())
@@ -59,4 +79,5 @@ app.use((err, req, res, next) => {
   });
 })
 
-module.exports = app
+// module.exports = app
+module.exports = { app, client };
