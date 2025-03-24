@@ -20,7 +20,8 @@ const dataSource = new DataSource({
     CreditPackage,
     Skill,
     User,
-    Coach
+    Coach,
+    Course
   ],//記得在這引入資料表
   ssl: config.get('db.ssl')
 })

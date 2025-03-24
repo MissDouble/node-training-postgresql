@@ -5,7 +5,7 @@ const saltRounds = 10
 
 const { dataSource } = require('../db/data-source')
 const logger = require('../utils/logger')('admin')
-const { isUndefined, isNotValidString, isValidPassword } = require('../utils/validUtils')
+const { isUndefined, isNotValidString, isValidPassword, isNotValidInteger } = require('../utils/validUtils')
 const isAuth = require('../middleware/isAuth')
 const isCoach = require('../middleware/isCoach')
 
@@ -16,16 +16,16 @@ router.post('/coaches/courses', isAuth, isCoach, async (req, res, next) => {//�
       // 可以用 moment
       //此API少檢查了skill_id的部分 文件沒有寫
       const { user_id, skill_id, name, description, start_at, end_at, max_participants, meeting_url } = req.body
-      if(!isValidString(user_id) || !isValidString(skill_id) || !isValidString(name)
-      || !isValidString(description) || !isValidString(start_at) || !isValidString(end_at)
-      || !isNumber(max_participants) || !isValidString(meeting_url) || !meeting_url.startsWith('https')) {
+      if(isNotValidString(user_id) || isNotValidString(skill_id) || isNotValidString(name)
+      || isNotValidString(description) || isNotValidString(start_at) || isNotValidString(end_at)
+      || isNotValidInteger(max_participants) || isNotValidString(meeting_url) || !meeting_url.startsWith('https')) {
         res.status(400).json({
           status : "failed",
           message: "欄位未填寫正確"
         })
         return
       }
-      const userRepo = dataSource.getRepository.get(User)
+      const userRepo = dataSource.getRepository("User")
       const findUser = await userRepo.findOne({//如果是用.find 後面要加上.length>0 的檢查 兩種寫法都可以
         where:{
             id:user_id
@@ -77,10 +77,10 @@ router.put('/coaches/courses/:courseId', isAuth, isCoach, async (req, res, next)
     // TODO 可以做檢查日期格式
     // 可以用 moment
     const { skill_id, name, description, start_at, end_at, max_participants, meeting_url } = req.body
-    if( !isValidString(courseId)
-    ||  !isValidString(skill_id) || !isValidString(name)
-    || !isValidString(description) || !isValidString(start_at) || !isValidString(end_at)
-    || !isNumber(max_participants) || !isValidString(meeting_url) || !meeting_url.startsWith('https')) {
+    if( isNotValidString(courseId)
+    ||  isNotValidString(skill_id) || isNotValidString(name)
+    || isNotValidString(description) || isNotValidString(start_at) || isValidString(end_at)
+    || isNotValidInteger(max_participants) || isNotValidString(meeting_url) || !meeting_url.startsWith('https')) {
       res.status(400).json({
         status : "failed",
         message: "欄位未填寫正確"
@@ -139,7 +139,7 @@ router.post('/coaches/:userId', async(req,res,next)=> {
     try {
         const { userId } = req.params
         const { experience_years, description, profile_image_url} = req.body
-        if(!isNotValidString(userId) || !isNumber(experience_years) || !isNotValidString(description)){
+        if(isNotValidString(userId) || isNotValidInteger(experience_years) || isNotValidString(description)){
             res.status(400).json({
                 status: "failed",
                 message: "欄位未填寫正確",
@@ -184,13 +184,13 @@ router.post('/coaches/:userId', async(req,res,next)=> {
               })
         }
         const coachRepo = dataSource.getRepository('Coach')
-        const newCoach = coachRepo.create({//create不用加 因為建立資料 但還沒存到db
+        const newCoach = coachRepo.create({//create不用加await 因為建立資料 但還沒存到db
             user_id: userId,
             description,
             profile_image_url,
             experience_years,
         })
-        const coachResult = await coachRepo.save(newCoach)//正式存入 要加
+        const coachResult = await coachRepo.save(newCoach)//正式存入 要加await
         const userResult = await userRepo.findOne({//要撈資料庫的行為就要加await
             where:{
                 id:userId

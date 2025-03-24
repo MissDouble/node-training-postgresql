@@ -10,7 +10,7 @@ const userRouter = require('./routes/users')
 const adminRouter = require('./routes/admin')
 
 //----debug
-require('dotenv').config(); // 確保 .env 變數載入
+require('dotenv').config({ override: true }) ; // 確保更新的 .env 變數正確載入
 const { Client } = require('pg');
 
 // 測試資料庫連線

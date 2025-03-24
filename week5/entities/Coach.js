@@ -1,7 +1,7 @@
 const {EntitySchema} = require('typeorm')
 
 module.exports = new EntitySchema({
-    name: 'coach',
+    name: 'Coach',
     tableName: 'COACH',
     columns:{
         id:{
@@ -31,12 +31,12 @@ module.exports = new EntitySchema({
         created_at:{
             type: 'timestamp',
             nullable: false,
-            createData: true,
+            createDate: true,
         },
         updated_at:{
             type: 'timestamp',
             nullable: false,
-            updateData: true,
+            updateDate: true,
         },
     },
     relations:{
