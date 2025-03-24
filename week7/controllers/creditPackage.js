@@ -70,6 +70,8 @@ async function post (req, res, next) {
 }
 
 async function postUserBuy (req, res, next) {
+  console.log('✅ postUserBuy 進來了')
+  console.log('🧾 req.params:', req.params)
   try {
     const { id } = req.user
     const { creditPackageId } = req.params
@@ -87,17 +89,19 @@ async function postUserBuy (req, res, next) {
       return
     }
     const creditPurchaseRepo = dataSource.getRepository('CreditPurchase')
-    const newPurchase = await creditPurchaseRepo.create({
+    const newPurchase = creditPurchaseRepo.create({
       user_id: id,
       credit_package_id: creditPackageId,
       purchased_credits: creditPackage.credit_amount,
       price_paid: creditPackage.price,
       purchaseAt: new Date().toISOString()
     })
-    await creditPurchaseRepo.save(newPurchase)
+    console.log('🔍 creditPackage:', creditPackage)
+    console.log('🔍 newPurchase:', newPurchase)
+    const result = await creditPurchaseRepo.save(newPurchase)
     res.status(200).json({
       status: 'success',
-      data: null
+      data: result
     })
   } catch (error) {
     logger.error(error)

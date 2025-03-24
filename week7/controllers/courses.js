@@ -49,6 +49,7 @@ async function postCourseBooking (req, res, next) {
   try {
     const { id } = req.user
     const { courseId } = req.params
+    console.log('🟢 postCourseBooking triggered:', { userId: id, courseId })
     const courseRepo = dataSource.getRepository('Course')
     const course = await courseRepo.findOne({
       where: {
@@ -121,9 +122,11 @@ async function postCourseBooking (req, res, next) {
 }
 
 async function deleteCourseBooking (req, res, next) {
+  console.log('🟢 deleteCourseBooking')
   try {
     const { id } = req.user
     const { courseId } = req.params
+    console.log('🟢 deleteCourseBooking triggered:', { userId: id, courseId })
     const courseBookingRepo = dataSource.getRepository('CourseBooking')
     const userCourseBooking = await courseBookingRepo.findOne({
       where: {

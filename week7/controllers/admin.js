@@ -223,6 +223,7 @@ async function getCoachCourses (req, res, next) {
 async function getCoachCourseDetail (req, res, next) {
   try {
     const { id } = req.user
+    const { courseId } = req.params
     const course = await dataSource.getRepository('Course').findOne({
       select: {
         id: true,
@@ -237,7 +238,8 @@ async function getCoachCourseDetail (req, res, next) {
         }
       },
       where: {
-        user_id: id
+        user_id: id,
+        id: courseId
       },
       relations: {
         Skill: true
@@ -263,6 +265,7 @@ async function getCoachCourseDetail (req, res, next) {
 }
 
 async function putCoachCourseDetail (req, res, next) {
+  console.log('編輯教練課程資料')
   try {
     const { id } = req.user
     const { courseId } = req.params

@@ -52,6 +52,7 @@ module.exports = ({
     throw new Error('[AuthV2] userRepository is required and must be a function.')
   }
   return async (req, res, next) => {
+    console.log('🔐 auth middleware 進來了')
     if (
       !req.headers ||
       !req.headers.authorization ||
@@ -74,10 +75,12 @@ module.exports = ({
         next(generateError(PERMISSION_DENIED_STATUS_CODE, FailedMessageMap.invalid))
         return
       }
+      console.log('✅ 驗證通過，使用者 ID：', user.id)
       req.user = user
       next()
     } catch (error) {
       logger.error(`[AuthV2] ${error.message}`)
+      console.log('❌ JWT 驗證失敗，錯誤內容：', error.message)
       next(error)
     }
   }
