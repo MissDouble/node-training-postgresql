@@ -61,12 +61,12 @@ const Skill = new EntitySchema({
 
 const AppDataSource = new DataSource({
   type: "postgres",
-  host: process.env.DB_HOST || "localhost",
+  host: process.env.DB_HOST || "127.0.0.1",
   port: process.env.DB_PORT || 5432,
   username: process.env.DB_USERNAME || "root",
   password: process.env.DB_PASSWORD || "test",
   database: process.env.DB_DATABASE || "test",
-  entities: [CreditPackage],
+  entities: [CreditPackage,Skill],
   synchronize: true,
 })
 

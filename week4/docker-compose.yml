@@ -11,7 +11,8 @@ services:
     volumes:
       - pgData:/var/lib/postgresql/data
     ports:
-      - 5432:5432
+      # - 5432:5432
+      - 5433:5432 # 將容器的5432映射到主機的5433 因為目前運作中的week7的容器已經使用5432
     deploy:
       replicas: 1
     networks:

@@ -1,4 +1,5 @@
-require("dotenv").config()
+// require("dotenv").config()
+require("dotenv").config({ override: true }) 
 const http = require("http")
 const AppDataSource = require("./db")
 //欄位資料型別驗證的3個function 也可以加上uuid的驗證，應該有套件 
@@ -159,9 +160,7 @@ const requestListener = async (req, res) => {
     req.on("end", async () => {
       try{
       const data = JSON.parse(body)
-      if(isUndefined(data.name) || isNotValidString(data.name) || 
-            isUndefined(data.credit_amount) || isNotValidInteger(data.credit_amount) || 
-            isUndefined(data.price) ||isNotValidInteger(data.price)){
+      if(isUndefined(data.name) || isNotValidString(data.name)){
           res.writeHead(400, headers)
           res.write(JSON.stringify({
             status: "failed",
@@ -269,6 +268,8 @@ async function startServer () {
   await AppDataSource.initialize()
   console.log("資料庫連接成功")
   server.listen(process.env.PORT)
+  console.log("📦 目前使用的 PORT 環境變數：", process.env.PORT)
+  console.log("🧾 當前執行目錄：", process.cwd())
   console.log(`伺服器啟動成功, port: ${process.env.PORT}`)
   return server;
 }
