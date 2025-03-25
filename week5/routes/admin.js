@@ -79,7 +79,7 @@ router.put('/coaches/courses/:courseId', isAuth, isCoach, async (req, res, next)
     const { skill_id, name, description, start_at, end_at, max_participants, meeting_url } = req.body
     if( isNotValidString(courseId)
     ||  isNotValidString(skill_id) || isNotValidString(name)
-    || isNotValidString(description) || isNotValidString(start_at) || isValidString(end_at)
+    || isNotValidString(description) || isNotValidString(start_at) || isNotValidString(end_at)
     || isNotValidInteger(max_participants) || isNotValidString(meeting_url) || !meeting_url.startsWith('https')) {
       res.status(400).json({
         status : "failed",
