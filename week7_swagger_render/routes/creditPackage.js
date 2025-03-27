@@ -45,7 +45,7 @@ router.get('/', creditPackage.getAll)
  *             properties:
  *               name:
  *                 type: string
- *               credit:
+ *               credit_amount:
  *                 type: integer
  *               price:
  *                 type: integer

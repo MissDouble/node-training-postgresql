@@ -18,6 +18,9 @@ const auth = require('../middlewares/auth')({
  *       type: http
  *       scheme: bearer
  *       bearerFormat: JWT
+ *   tags:
+ *   name: Admin
+ *   description: 使用者相關 API
  */
 
 /**
@@ -154,7 +157,7 @@ router.get('/profile', auth, users.getProfile)
  * @swagger
  * /api/users/credit-package:
  *   get:
- *     summary: 取得使用者點數紀錄
+ *     summary: 取得使用者已購買的方案列表
  *     tags: [Users]
  *     security:
  *       - bearerAuth: []

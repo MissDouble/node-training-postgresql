@@ -34,6 +34,9 @@ const isCoach = require('../middlewares/isCoach')
  *           schema:
  *             type: object
  *             properties:
+ *               coach_id:
+ *                 type: string
+ *                 format: uuid
  *               name:
  *                 type: string
  *               description:
@@ -46,11 +49,25 @@ const isCoach = require('../middlewares/isCoach')
  *                 format: date-time
  *               meeting_url:
  *                 type: string
+ *               max_participants:
+ *                 type: integer
+ *               skill_id:
+ *                 type: string
+ *                 format: uuid
+ *             required:
+ *               - coach_id
+ *               - name
+ *               - description
+ *               - start_at
+ *               - end_at
+ *               - meeting_url
+ *               - max_participants
+ *               - skill_id
  *     responses:
  *       201:
  *         description: 課程建立成功
  *       400:
- *         description: 請填寫正確課程資訊
+ *         description: 課程建立失敗，請確認欄位是否填寫正確
  */
 router.post('/coaches/courses', auth, isCoach, admin.postCourse)
 
@@ -62,11 +79,20 @@ router.post('/coaches/courses', auth, isCoach, admin.postCourse)
  *     tags: [Admin]
  *     security:
  *       - bearerAuth: []
+ *     parameters:
+ *       - in: query
+ *         name: month
+ *         required: true
+ *         schema:
+ *           type: string
+ *           enum: [january, february, march, april, may, june, july, august, september, october, november, december]
+ *           example: january
+ *         description: 要查詢的月份（英文小寫）
  *     responses:
  *       200:
  *         description: 成功取得收益資料
  *       401:
- *         description: 未授權
+ *         description: 使用者非教練身分或未登入
  */
 router.get('/coaches/revenue', auth, isCoach, admin.getCoachRevenue)
 
@@ -82,7 +108,7 @@ router.get('/coaches/revenue', auth, isCoach, admin.getCoachRevenue)
  *       200:
  *         description: 成功取得課程列表
  *       401:
- *         description: 未授權
+ *         description: 使用者非教練身分或未登入
  */
 router.get('/coaches/courses', auth, isCoach, admin.getCoachCourses)
 
@@ -105,7 +131,7 @@ router.get('/coaches/courses', auth, isCoach, admin.getCoachCourses)
  *       200:
  *         description: 成功取得課程資訊
  *       404:
- *         description: 找不到課程
+ *         description: 查無此課程
  */
 router.get('/coaches/courses/:courseId', auth, admin.getCoachCourseDetail)
 
@@ -137,11 +163,22 @@ router.get('/coaches/courses/:courseId', auth, admin.getCoachCourseDetail)
  *                 type: string
  *               meeting_url:
  *                 type: string
+ *               start_at:
+ *                 type: string
+ *                 format: date-time
+ *               end_at:
+ *                 type: string
+ *                 format: date-time
+ *               max_participants:
+ *                 type: integer
+ *               skill_id:
+ *                 type: string
+ *                 format: uuid
  *     responses:
  *       200:
  *         description: 課程更新成功
  *       400:
- *         description: 更新失敗或資料錯誤
+ *         description: 更新失敗，請確認欄位是否填寫正確
  */
 router.put('/coaches/courses/:courseId', auth, admin.putCoachCourseDetail)
 
@@ -181,7 +218,7 @@ router.put('/coaches/courses/:courseId', auth, admin.putCoachCourseDetail)
  *       201:
  *         description: 已成功升級為教練
  *       404:
- *         description: 使用者不存在
+ *         description: 查無此使用者
  */
 router.post('/coaches/:userId', admin.postCoach)
 
@@ -200,15 +237,20 @@ router.post('/coaches/:userId', admin.postCoach)
  *           schema:
  *             type: object
  *             properties:
- *               title:
+ *               experience_years:
+ *                 type: integer
+ *               description:
  *                 type: string
- *               bio:
+ *               profile_image_url:
  *                 type: string
+ *             required:
+ *               - experience_years
+ *               - description
  *     responses:
  *       200:
  *         description: 教練資料更新成功
  *       400:
- *         description: 格式錯誤或更新失敗
+ *         description: 請確認格式是否正確或教練不存在
  */
 router.put('/coaches', auth, isCoach, admin.putCoachProfile)
 
@@ -224,7 +266,7 @@ router.put('/coaches', auth, isCoach, admin.putCoachProfile)
  *       200:
  *         description: 成功取得教練資料
  *       404:
- *         description: 找不到資料
+ *         description: 查無此教練
  */
 router.get('/coaches', auth, isCoach, admin.getCoachProfile)
 

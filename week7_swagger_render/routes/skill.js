@@ -4,7 +4,7 @@ const express = require('express')
  * @swagger
  * tags:
  *   name: Skill
- *   description: 技能包相關 API
+ *   description: 專長相關 API
  */
 
 const router = express.Router()
@@ -14,11 +14,11 @@ const skill = require('../controllers/skill')
  * @swagger
  * /api/skill:
  *   get:
- *     summary: 取得所有技能包
+ *     summary: 取得所有專長
  *     tags: [Skill]
  *     responses:
  *       200:
- *         description: 成功取得技能資料列表
+ *         description: 成功取得專長資料列表
  */
 router.get('/', skill.getAll)
 
@@ -26,7 +26,7 @@ router.get('/', skill.getAll)
  * @swagger
  * /api/skill:
  *   post:
- *     summary: 新增技能包
+ *     summary: 新增專長
  *     tags: [Skill]
  *     requestBody:
  *       required: true
@@ -37,11 +37,9 @@ router.get('/', skill.getAll)
  *             properties:
  *               name:
  *                 type: string
- *               icon_url:
- *                 type: string
  *     responses:
  *       201:
- *         description: 新增成功，回傳技能資料
+ *         description: 新增成功，回傳專長資料
  *         content:
  *           application/json:
  *             schema:
@@ -60,7 +58,7 @@ router.get('/', skill.getAll)
  *                     icon_url:
  *                       type: string
  *       400:
- *         description: 欄位未填寫正確 或 技能名稱重複
+ *         description: 欄位未填寫正確 或 專長名稱重複
  *         content:
  *           application/json:
  *             schema:
@@ -71,7 +69,7 @@ router.get('/', skill.getAll)
  *                   example: failed
  *                 message:
  *                   type: string
- *                   example: 技能名稱不可重複
+ *                   example: 專長名稱不可重複
  */
 router.post('/', skill.post)
 
@@ -79,7 +77,7 @@ router.post('/', skill.post)
  * @swagger
  * /api/skill/{skillId}:
  *   delete:
- *     summary: 刪除技能包
+ *     summary: 刪除專長
  *     tags: [Skill]
  *     parameters:
  *       - in: path
@@ -104,7 +102,7 @@ router.post('/', skill.post)
  *                   nullable: true
  *                   example: null
  *       404:
- *         description: 找不到技能資料
+ *         description: 找不到專長資料
  *         content:
  *           application/json:
  *             schema:
@@ -115,7 +113,7 @@ router.post('/', skill.post)
  *                   example: failed
  *                 message:
  *                   type: string
- *                   example: 找不到該技能
+ *                   example: 找不到該專長
  */
 router.delete('/:skillId', skill.deletePackage)
 
