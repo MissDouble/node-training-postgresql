@@ -19,8 +19,8 @@ const auth = require('../middlewares/auth')({
  *       scheme: bearer
  *       bearerFormat: JWT
  *   tags:
- *   name: Admin
- *   description: 使用者相關 API
+ *        name: Admin
+ *        description: 使用者相關 API
  */
 
 /**
